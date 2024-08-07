@@ -9,7 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet, ReadOnlyModelViewSet
-from PIL import Image
+import PIL
 
 from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession, Order
 from cinema.permissions import IsAdminOrIfAuthenticatedReadOnly
@@ -118,7 +118,7 @@ class MovieViewSet(
             )
         image = request.data["image"]
         try:
-            img = Image.open(image)
+            img = PIL.Image.open(image)
             img.verify()
         except (IOError, SyntaxError):
             return Response(
